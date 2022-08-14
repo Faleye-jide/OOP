@@ -1,3 +1,5 @@
+import csv
+from distutils.command.build_scripts import first_line_re
 import os
 import shutil
 import argparse
@@ -16,24 +18,47 @@ class Person:
                 self.data_list.append(num)
         return self.data_list
     
-
+    def create_image_info(self, new_list):
+        new_data = self.get_data(new_list)
+        return new_data
+    
+    
+    def get_all_images(self):
+        file_path = os.getcwd()
+        for r,d,f in os.walk(file_path):
+            for file in f:
+                file_type = '.csv'
+                if file.endswith(file_type):
+                    file_path = os.path.join(r, file)
+        
+        with open(file_path, 'r') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                print(dict(row))
+        
+        
 if __name__ == '__main__':
-    # argpaser
+    # specify arguments through argpaser
     parser = argparse.ArgumentParser()
     parser.add_argument('--numbers', dest='num', type=int, nargs='+')
     parser.add_argument('--age', dest='age', type=str)
     parser.add_argument('--name', dest='name', type=str)
+    parser.add_argument('--num', dest='new_list', type=int, nargs='+')
     
     
     args = parser.parse_args()
     
     person = Person(args.age, args.name)
-    print('Before adding the list')
-    print(person.__dict__)
+    print(person.create_image_info(args.new_list))
+    # print('Before adding the list')
+    # print(person.__dict__)
+    # print('dir', person.__setattr__('age', 29))
     
-    print(person.get_data(args.num))
-    print('After adding the list')
     
+    # print(person.get_data(args.num))
+    # print('After adding the list')
+    
+    # print(person.get_all_images())
     print(person.__dict__) # To get all the attributes of an object
 
 
