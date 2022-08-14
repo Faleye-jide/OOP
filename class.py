@@ -31,11 +31,14 @@ class Person:
                 if file.endswith(file_type):
                     file_path = os.path.join(r, file)
         
-        with open(file_path, 'r') as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                print(dict(row))
-        
+        # with open(file_path, 'r') as file:
+        #     reader = csv.DictReader(file)
+        #     for row in reader:
+        #         print(dict(row))
+                
+    def get_name(self):
+        return self.name
+                
         
 if __name__ == '__main__':
     # specify arguments through argpaser
@@ -50,6 +53,7 @@ if __name__ == '__main__':
     
     person = Person(args.age, args.name)
     print(person.create_image_info(args.new_list))
+    print(person.get_name())
     # print('Before adding the list')
     # print(person.__dict__)
     # print('dir', person.__setattr__('age', 29))
